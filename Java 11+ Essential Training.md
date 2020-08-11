@@ -1,5 +1,7 @@
 # Java 11+ Essential Training
 
+*LinkedIn Learning: Java 11+ Essential Training*
+
 ## Basic Java Syntax
 
 ```java
