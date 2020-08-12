@@ -263,3 +263,109 @@ request.getRequestDispatcher("WEB-INF/HelloWorld.jsp").forward(request,response)
 ### Polling with AJAX
 
 AJAX: allows us to write JavaScript code that requests content from a URL without navigating the browser to a new page (see notes on AJAX!)
+
+
+
+
+### Posting with AJAX
+
+To start a POST request using AJAX: create a XMLHttpRequest object:
+
+```java
+var ajaxPostRequest = new XMLHttpRequest();
+```
+
+then cal open and where you want to send the request 
+
+```java
+ajaxPostRequest.open("POST", "/chat");
+```
+
+Then call setRequestHeade() to tell server how we are going to specify the data:
+
+``` java
+ajaxPostRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+```
+
+Send data in format specified:  (this exampe is in query form. where parameters are asssigned values separated by &): 
+
+```java
+var name = document.getElementById('name').value
+var message = document.getElementById('message').value
+ajaxPostRequest.send("name=" + name + "&message=" + message);
+```
+
+Sends post request to the server 
+
+FULL: 
+
+
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat Web App</title>
+	
+	<script>
+		function getChats(){
+			var ajaxRequest = new XMLHttpRequest();
+			ajaxRequest.onreadystatechange = function(){
+			
+				if(ajaxRequest.readyState == 4){
+					//the request is completed, now check its status
+					if(ajaxRequest.status == 200){
+						document.getElementById("chats").innerHTML = ajaxRequest.responseText;
+					}
+					else{
+						console.log("Status error: " + ajaxRequest.status);
+					}
+				}
+				else{
+					console.log("Ignored readyState: " + ajaxRequest.readyState);
+				}
+			}
+			ajaxRequest.open('GET', '/chat');
+			ajaxRequest.send();
+			
+			//refresh the chats in one second
+			setTimeout(getChats, 1000);
+		}
+		
+		function postChat(){
+			console.log("posting chat");	
+			var ajaxPostRequest = new XMLHttpRequest();
+			ajaxPostRequest.open("POST", "/chat");
+			ajaxPostRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			var name = document.getElementById('name').value
+			var message = document.getElementById('message').value
+			ajaxPostRequest.send("name=" + name + "&message=" + message);
+		}
+	
+	</script>	
+</head>
+<body onload="getChats()">
+	<h1>Chat Web App</h1>
+	<hr />
+	<div id="chats"></div>
+	<hr />
+	
+	<input id="name" type="text" name="name" value="Ada">
+	<input id="message" type="text" name="message" value="Happy coding!">
+	<input type="submit" value="Send" onclick="postChat()">
+
+</body>
+</html>
+```
+
+
+
+
+
+### Other Approaches: 
+
+- AJAX
+- Cookies
+- Sessions
+- Long polling (same as abouve but waiting until new message is sent to return content)
+- WebSockets (instead of aksing the serever for message the server would send the message to the client whenever there is an update)
