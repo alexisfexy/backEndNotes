@@ -225,3 +225,41 @@ request.setAttribute("message", message);
 request.getRequestDispatcher("WEB-INF/HelloWorld.jsp").forward(request,response);
 ```
 
+
+```html
+<%@ page import="java.util.List" %>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chat Web App</title>
+	</head>
+	<body>
+		<h1>Chat Web App</h1>
+		<% 
+			List<String> messages = (List<String>) request.getAttribute("messages"); 
+			for(int i = 0; i < messages.size(); i++){
+				String message = messages.get(i);	
+		%>
+			<p><%= message %></p>
+			
+		<% } %>
+		
+		<hr/>
+		
+		<form action="/chat" method="POST">
+		<input type="text" name="name" value="Ada">
+		<input type="text" name="message" value="Happy coding!">
+		<input type="submit" value="Send">
+		</form> 
+	</body>
+</html>
+```
+
+- `doPost()` function still adds a message to the `messages` list and then redirects back to the `GET` request
+- `doGet()` function adds that list to the request and forwards to our JSP file, which renders the messages.
+
+
+
+### Polling with AJAX
+
+AJAX: allows us to write JavaScript code that requests content from a URL without navigating the browser to a new page (see notes on AJAX!)
