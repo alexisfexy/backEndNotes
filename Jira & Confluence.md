@@ -4,7 +4,7 @@
 
 
 
-## Aglie Prinicples:
+## Agile Prinicples:
 
 - iterative development 
 - adaptive to changing requirements
