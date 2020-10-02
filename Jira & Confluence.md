@@ -69,7 +69,7 @@ TO DO: sprint backlog
 
 
 
-**JIRA Terms **
+**JIRA Terms**
 
 - Issues: work item
 - Projects: collection of issues
